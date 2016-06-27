@@ -245,5 +245,13 @@ INSERT INTO @RESULTS VALUES('Цена блюда (шт)', @price , '576')
 SELECT @price = CAST(total as varchar(50)) FROM BILL WHERE number = @bill_number
 INSERT INTO @RESULTS VALUES('Сумма счёта', @price, '475,6');
 
+exec UPDATE_BILL_ITEM @bill_item, 4, 200, 0, 0  
+
+SELECT TOP 1 @price = CAST(price as varchar(50)) FROM BILL_ITEM WHERE id = @bill_item
+INSERT INTO @RESULTS VALUES('Цена блюда (шт)', @price , '576') 
+
+SELECT @price = CAST(total as varchar(50)) FROM BILL WHERE number = @bill_number
+INSERT INTO @RESULTS VALUES('Сумма счёта', @price, '475,6');
+
 SELECT * FROM @RESULTS
 

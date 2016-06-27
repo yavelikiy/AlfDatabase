@@ -222,4 +222,15 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
-CREATE PROCEDURE UPDATE_BILL_ITEM(@)
+DROP PROCEDURE UPDATE_BILL_ITEM
+GO
+CREATE PROCEDURE UPDATE_BILL_ITEM(@bill_item INT, @count INT, @portion INT, @later INT, @away INT)
+AS
+BEGIN
+	UPDATE BILL_ITEM SET count = @count, portion = @portion, later = @later, away = @away
+		WHERE id = @bill_item
+	EXEC UPDATE_BILL_ITEM_PRICE @bill_item
+	DECLARE @bill_number INT
+	SELECT @bill_number = bill FROM BILL_ITEM WHERE id = @bill_item
+	EXEC UPDATE_BILL_PRICE @bill_number
+END
